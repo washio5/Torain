@@ -840,9 +840,13 @@
 </main>
 
  <!-- プレイヤー -->
+<!-- プレイヤー -->
 <div class="player-container">
 
-  <div class="now-playing" id="nowPlaying">
+  <div
+    class="now-playing"
+    id="nowPlaying"
+  >
     駅を選択してください
   </div>
 
@@ -862,118 +866,120 @@
 
 </div>
 
+</main>
+
 <script>
 
-  const player =
-    document.getElementById(
-      "player"
-    );
+const player =
+  document.getElementById(
+    "player"
+  );
 
-  const nowPlaying =
-    document.getElementById(
-      "nowPlaying"
-    );
+const nowPlaying =
+  document.getElementById(
+    "nowPlaying"
+  );
 
-  const pauseBtn =
-    document.getElementById(
-      "pauseBtn"
-    );
+const pauseBtn =
+  document.getElementById(
+    "pauseBtn"
+  );
 
-  const restartBtn =
-    document.getElementById(
-      "restartBtn"
-    );
+const restartBtn =
+  document.getElementById(
+    "restartBtn"
+  );
 
-  /* 駅ボタン */
+/* 駅カード */
 
-  document
-    .querySelectorAll(
-      ".station-card"
-    )
-    .forEach(card => {
+document
+  .querySelectorAll(
+    ".station-card"
+  )
+  .forEach(card=>{
 
-      card.addEventListener(
-        "click",
-        () => {
+    card.addEventListener(
+      "click",
+      ()=>{
 
-          const audio =
-            card.dataset.audio;
+        const audio =
+          card.dataset.audio;
 
-          const station =
-            card.dataset.station;
+        const station =
+          card.dataset.station;
 
-          if(!audio) return;
+        if(!audio)return;
 
-          player.src = audio;
-
-          player.play();
-
-          nowPlaying.textContent =
-            `${station} を再生中`;
-
-          pauseBtn.textContent =
-            "⏸";
-
-        }
-      );
-
-    });
-
-  /* 再生 / 一時停止 */
-
-  pauseBtn.addEventListener(
-    "click",
-    () => {
-
-      if(player.paused){
+        player.src = audio;
 
         player.play();
+
+        nowPlaying.textContent =
+          station + " を再生中";
 
         pauseBtn.textContent =
           "⏸";
 
-      }else{
-
-        player.pause();
-
-        pauseBtn.textContent =
-          "▶";
-
       }
+    );
 
-    }
-  );
+  });
 
-  /* 最初から */
+/* 再生 / 一時停止 */
 
-  restartBtn.addEventListener(
-    "click",
-    () => {
+pauseBtn.addEventListener(
+  "click",
+  ()=>{
 
-      player.currentTime = 0;
+    if(player.paused){
 
       player.play();
 
       pauseBtn.textContent =
         "⏸";
 
-    }
-  );
+    }else{
 
-  /* 再生終了 */
-
-  player.addEventListener(
-    "ended",
-    () => {
+      player.pause();
 
       pauseBtn.textContent =
         "▶";
 
-      nowPlaying.textContent =
-        "再生終了";
-
     }
-  );
+
+  }
+);
+
+/* 最初から */
+
+restartBtn.addEventListener(
+  "click",
+  ()=>{
+
+    player.currentTime = 0;
+
+    player.play();
+
+    pauseBtn.textContent =
+      "⏸";
+
+  }
+);
+
+/* 再生終了 */
+
+player.addEventListener(
+  "ended",
+  ()=>{
+
+    pauseBtn.textContent =
+      "▶";
+
+    nowPlaying.textContent =
+      "駅を選択してください";
+
+  }
+);
 
 </script>
 
